@@ -1,43 +1,41 @@
-import React, {useEffect, useState} from "react";
-//import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import MovieList from "./components/MovieList";
-import MovieListHeading from "./components/MovieListHeading";
-import SearchBox from "./components/SearchBox";
+import './App.css';
+import React, {useEffect, useState} from 'react';
+import MovieList from './components/MovieList';
+import "bootstrap/dist/css/bootstrap.min.css";
+import MovieListHeading from './components/MovieListHeading';
+import SearchBox from './components/SearchBox'; 
 
-const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
 
-  const getMovieRequest = async(searchValue) => {
-    //const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=b73c116c`
-    const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=9788c89c`
+const App = ()=>  {
+  const [movies, setMovies] = useState([ ]);
+  const [searchValue, setSearchValue] = useState('');
 
-    const response = await fetch (url);
-    const responseJson = await response.json();
+const getMovieRequest = async (searchValue) => {
+  const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=9788c89c`;
 
-    if(responseJson.Search){
-      setMovies(responseJson.Search);
-    }
-  };
+  const response = await fetch(url);
+  const responseJson = await response.json();
+  //console.log(responseJson);
+  if(responseJson.Search){
+    setMovies(responseJson.Search);
+  }
+};
 
-  useEffect (() => {
-    getMovieRequest(searchValue);
-  }, [searchValue]);
+useEffect(()=>{
+  getMovieRequest(searchValue);
+}, [searchValue]);
 
   return (
-    <div className="container_fluid movie_app">
-      <div className="row d-flex align-items-center mt-4 mb-4">
-          <MovieListHeading  heading= "Movies" />
-          <SearchBox searchValue= {searchValue} setSearchValue= {setSearchValue} />
+    <div className='container-fluid movie-app'>
+      <div className='row d-flex align-items-center mt-4 mb-4'>
+        <MovieListHeading heading='Movies'/>
+        <SearchBox  searchValue = {searchValue} setSearchValue={setSearchValue}/>
       </div>
-
       <div className="row">
       <MovieList movies = {movies} />
       </div>
-
     </div>
-  );
-};
+    );
+}
 
 export default App;
